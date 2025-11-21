@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Course Overview</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Collage-specific styles (integrates with your style.css) */
+
+    .index-collage-wrap {
+      display: flex;
+      justify-content: space-between;
+      gap: 40px;
+      align-items: flex-start;
+      background: #fff;
+      padding: 44px;
+      border-radius: 6px;
+      border: 1px solid rgba(0,0,0,0.03);
+      box-shadow: 0 0 0 8px #f2f2f2 inset;
+    }
+
+    .left-block { width: 55%; }
+    .right-block { width: 40%; display:flex; flex-direction:column; align-items:center; }
+
+    .poster-title { font-size: 13px; font-weight:600; color:#999; margin-bottom:16px; text-transform:uppercase; letter-spacing:.8px; }
+
+    /* Poster box (same size you used elsewhere) */
+    .poster-box {
+      width: 260px;
+      height: 340px;
+      margin: auto;
+      background: #eee;
+      border: 1px solid #e1e1e1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: visible; /* allow scatter outside poster */
+      border-radius: 10px;
+      position: relative;
+    }
+
+    /* Collage now fills the poster-box */
+    .collage {
+      position: absolute;
+      inset: 0;
+      display: block;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      border-radius: 10px;
+      overflow: visible;
+      display: grid;
+      place-items: center;
+    }
+
+    /* stack uses poster internal dimensions so transforms are relative */
+    .collage .stack {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 100%;
+      height: 100%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .collage img.collage-item {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 46%;
+      height: auto;
+      max-height: 44%;
+      object-fit: cover;
+      transform: translate(-50%, -50%);
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.6);
+      box-shadow: 0 10px 30px rgba(10,10,10,0.15);
+      transition: transform 650ms cubic-bezier(.2,.9,.2,1), box-shadow 350ms;
+      will-change: transform;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* small initial offsets are applied by JS now (CSS fallback kept) */
+
+    .collage .overlay {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%,-50%);
+      pointer-events: none;
+      /* changed to black as requested */
+      color: #000;
+      text-align: center;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      text-shadow: none; /* keep clean black text */
+      opacity: 0;
+      transition: opacity 240ms ease;
+      font-size: 20px;
+    }
+
+    .collage .backdrop {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.12));
+      border-radius: 10px;
+      opacity: 0;
+      transition: opacity 300ms ease;
+      pointer-events: none;
+    }
+
+    .collage.scattered .backdrop { opacity: 1; }
+    .collage.scattered .overlay { opacity: 1; }
+    .collage.scattered img.collage-item { box-shadow: 0 20px 40px rgba(8,8,8,0.25); }
+
+    .poster-caption { margin-top: 12px; font-size: 12px; color: #888; text-align:center; }
+
+    @media (max-width: 680px) {
+      .poster-box { width: 220px; height: 280px; }
+      .collage .stack { width: 100%; height: 100%; }
+      .collage img.collage-item { width: 54%; max-height: 40%; }
+      .overlay { font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="index-collage-wrap">
+
+      <!-- LEFT column (course text) -->
+      <div class="left-block">
+        <div class="course-title">COURSE NAME</div>
+
+        <div class="subheading">COURSE DESCRIPTION</div>
+        <p class="description">
+          Lorem ipsum is simply dummy text of the printing and typesetting industry.
+          Lorem ipsum has been the industry's standard dummy text ever since the 1500s.
+          It has survived not only five centuries but also the leap into electronic typesetting,
+          remaining essentially unchanged.
+        </p>
+
+        <div class="meta">
+          <p><strong>COURSE CREDITS</strong><br>4</p>
+          <p style="margin-top:10px;"><strong>FACULTY NAME</strong><br>John Doe</p>
+        </div>
+      </div>
+
+      <!-- RIGHT column (collage) -->
+      <div class="right-block">
+        <div class="poster-title">EXPLORE</div>
+
+        <!-- poster box replaced with collage that fills it -->
+        <div class="poster-box" aria-hidden="false">
+          <div id="collage" class="collage" role="button" aria-label="Explore games" tabindex="0" title="Explore games">
+            <div class="stack" id="stack"></div>
+            <div class="backdrop"></div>
+            <div class="overlay">Explore games<br></div>
+          </div>
+        </div>
+
+        <div class="poster-caption">Hover (or tap) the collage. Click to open the frame page.</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /************************************************************************
+     * CONFIG: Put your exact image paths here (absolute or relative).
+     * The developer-provided uploaded file path is used as the default entry.
+     *
+     * NOTE: Replace the placeholder paths below with your own files.
+     **************************************************************************/
+    const COLLAGE_IMAGES = [
+      "/mnt/data/website.png", "/mnt/data/website.png", "/mnt/data/website.png",
+      "/mnt/data/website.png", "/mnt/data/website.png", "/mnt/data/website.png",
+      "/mnt/data/website.png", "/mnt/data/website.png", "/mnt/data/website.png",
+      "/mnt/data/website.png", "/mnt/data/website.png", "/mnt/data/website.png",
+      "/mnt/data/website.png", "/mnt/data/website.png", "/mnt/data/website.png",
+      "/mnt/data/website.png", "/mnt/data/website.png", "/mnt/data/website.png",
+      "/mnt/data/website.png", "/mnt/data/website.png"
+    ];
+
+    // How many items to render (use up to COLLAGE_IMAGES.length or fewer)
+    const COUNT = Math.min(20, COLLAGE_IMAGES.length);
+
+    const stack = document.getElementById('stack');
+    const collage = document.getElementById('collage');
+    const posterBox = document.querySelector('.poster-box');
+
+    // Helpers
+    function randRange(min, max) {
+      return min + Math.random() * (max - min);
+    }
+
+    // Build collage items and set initial small-random scatter
+    // initialTransforms holds the small positions to return to on mouseleave
+    const initialTransforms = [];
+
+    for (let i = 0; i < COUNT; i++) {
+      const img = document.createElement('img');
+      img.className = 'collage-item';
+      img.setAttribute('data-i', String(i));
+      img.alt = 'collage image ' + (i + 1);
+      img.draggable = false;
+      img.src = COLLAGE_IMAGES[i % COLLAGE_IMAGES.length];
+      stack.appendChild(img);
+
+      // compute small random initial offset (within poster bounds)
+      // offsets relative to poster center in px
+      const safeW = posterBox.clientWidth * 0.42;  // horizontal safe radius
+      const safeH = posterBox.clientHeight * 0.36; // vertical safe radius
+      const tx = randRange(-safeW, safeW) * 0.6;   // reduce spread a bit
+      const ty = randRange(-safeH, safeH) * 0.6;
+      const rot = randRange(-20, 20);
+      const scl = randRange(0.9, 1.05);
+      initialTransforms.push({ tx, ty, rot, scl });
+
+      // apply immediately (initial small scatter)
+      img.style.transform = `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) rotate(${rot}deg) scale(${scl})`;
+      img.style.zIndex = 50 + (COUNT - i);
+    }
+
+    // compute large scatter transforms (on hover) scaled to poster size
+    function computeLargeScatter() {
+      const posterRect = posterBox.getBoundingClientRect();
+      const minD = Math.round(Math.min(posterRect.width, posterRect.height) * 0.35);
+      const maxD = Math.round(Math.min(posterRect.width, posterRect.height) * 0.9);
+      const transforms = [];
+      for (let i = 0; i < COUNT; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const dist = randRange(minD, maxD);
+        const rot = randRange(-65, 65);
+        const scl = randRange(0.95, 1.35);
+        const tx = Math.cos(angle) * dist;
+        const ty = Math.sin(angle) * dist * 0.9;
+        transforms.push({ tx, ty, rot, scl });
+      }
+      return transforms;
+    }
+
+    let largeTransforms = computeLargeScatter();
+    let isScattered = false;
+
+    function scatter() {
+      // recompute large transforms (responsive & fresh randomness)
+      largeTransforms = computeLargeScatter();
+      const imgs = stack.querySelectorAll('img.collage-item');
+      imgs.forEach((img, i) => {
+        const t = largeTransforms[i];
+        const depth = (i % 6) * 2;
+        img.style.zIndex = 200 + i + depth;
+        img.style.transition = 'transform 650ms cubic-bezier(.2,.9,.2,1), box-shadow 350ms';
+        img.style.transform = `translate(calc(-50% + ${t.tx}px), calc(-50% + ${t.ty}px)) rotate(${t.rot}deg) scale(${t.scl})`;
+      });
+      collage.classList.add('scattered');
+      isScattered = true;
+    }
+
+    function gatherToInitial() {
+      const imgs = stack.querySelectorAll('img.collage-item');
+      imgs.forEach((img, i) => {
+        const t = initialTransforms[i];
+        img.style.transition = 'transform 600ms cubic-bezier(.25,.9,.2,1), box-shadow 300ms';
+        img.style.transform = `translate(calc(-50% + ${t.tx}px), calc(-50% + ${t.ty}px)) rotate(${t.rot}deg) scale(${t.scl})`;
+        img.style.zIndex = 50 + (COUNT - i);
+      });
+      collage.classList.remove('scattered');
+      isScattered = false;
+    }
+
+    // Mouse / touch handling
+    let hoverTimer = null;
+
+    collage.addEventListener('mouseenter', () => {
+      clearTimeout(hoverTimer);
+      hoverTimer = setTimeout(scatter, 80);
+    });
+
+    collage.addEventListener('mouseleave', () => {
+      clearTimeout(hoverTimer);
+      gatherToInitial();
+    });
+
+    // Click/tap: first tap scatters on mobile, second click navigates
+    collage.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (!isScattered) {
+        scatter();
+        return;
+      }
+      window.location.href = 'frame.html';
+    });
+
+    // Keyboard accessibility
+    collage.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        if (!isScattered) scatter();
+        else window.location.href = 'frame.html';
+      }
+      if (e.key === 'Escape' && isScattered) gatherToInitial();
+    });
+
+    // touchstart for quick feedback on mobile
+    collage.addEventListener('touchstart', () => {
+      if (!isScattered) scatter();
+    }, { passive: true });
+
+    // recompute transforms on resize and reposition initial small scatter proportionally
+    window.addEventListener('resize', () => {
+      // recompute safe area and adjust initial transforms proportionally
+      const posterW = posterBox.clientWidth;
+      const posterH = posterBox.clientHeight;
+      for (let i = 0; i < initialTransforms.length; i++) {
+        // keep same direction but scale distances to new size
+        const it = initialTransforms[i];
+        const angle = Math.atan2(it.ty, it.tx);
+        const dist = Math.hypot(it.tx, it.ty);
+        const scale = Math.min(posterW, posterH) / 320; // base scale
+        const newTx = Math.cos(angle) * dist * scale;
+        const newTy = Math.sin(angle) * dist * scale;
+        initialTransforms[i].tx = newTx;
+        initialTransforms[i].ty = newTy;
+      }
+      // reapply initial positions
+      gatherToInitial();
+    });
+  </script>
+</body>
+</html>

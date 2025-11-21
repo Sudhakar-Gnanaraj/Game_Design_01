@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Non-Digital Games</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="modal.js" defer></script>
+</head>
+<body>
+  <div class="portfolio-frame">
+    <a href="frame.html" class="back-button">← Back</a>
+
+    <div class="assignment-title">NON-DIGITAL GAMES</div>
+    <div class="assignment-sub">Submissions</div>
+
+    <div class="cards-grid">
+      <!-- 18 nondigital cards -->
+      <div class="card" role="button" tabindex="0" onclick="openGameModal('nondig1')">
+        <div class="thumb"><img src="/mnt/data/website.png" alt="ND 1"></div>
+        <h4>ND 01</h4>
+      </div>
+      <div class="card" role="button" tabindex="0" onclick="openGameModal('nondig2')">
+        <div class="thumb"><img src="/mnt/data/website.png" alt="ND 2"></div>
+        <h4>ND 02</h4>
+      </div>
+      <div class="card" role="button" tabindex="0" onclick="openGameModal('nondig3')">
+        <div class="thumb"><img src="/mnt/data/website.png" alt="ND 3"></div>
+        <h4>ND 03</h4>
+      </div>
+
+      <div class="card" role="button" tabindex="0" onclick="openGameModal('nondig4')">
+        <div class="thumb"><img src="/mnt/data/website.png" alt="ND 4"></div>
+        <h4>ND 04</h4>
+      </div>
+      <div class="card" role="button" tabindex="0" onclick="openGameModal('nondig5')">
+        <div class="thumb"><img src="/mnt/data/website.png" alt="ND 5"></div>
+        <h4>ND 05</h4>
+      </div>
+      <div class="card" role="button" tabindex="0" onclick="openGameModal('nondig6')">
+        <div class="thumb"><img src="/mnt/data/website.png" alt="ND 6"></div>
+        <h4>ND 06</h4>
+      </div>
+
+      <div class="card" role="button" tabindex="0" onclick="openGameModal('nondig7')">
+        <div class="thumb"><img src="/mnt/data/website.png" alt="ND 7"></div>
+        <h4>ND 07</h4>
+      </div>
+      <div class="card" role="button" tabindex="0" onclick="openGameModal('nondig8')">
+        <div class="thumb"><img src="/mnt/data/website.png" alt="ND 8"></div>
+        <h4>ND 08</h4>
+      </div>
+      <div class="card" role="button" tabindex="0" onclick="openGameModal('nondig9')">
+        <div class="thumb"><img src="/mnt/data/website.png" alt="ND 9"></div>
+        <h4>ND 09</h4>
+      </div>
+
+      <div class="card" role="button" tabindex="0" onclick="openGameModal('nondig10')">
+        <div class="thumb"><img src="/mnt/data/website.png" alt="ND 10"></div>
+        <h4>ND 10</h4>
+      </div>
+      <div class="card" role="button" tabindex="0" onclick="openGameModal('nondig11')">
+        <div class="thumb"><img src="/mnt/data/website.png" alt="ND 11"></div>
+        <h4>ND 11</h4>
+      </div>
+      <div class="card" role="button" tabindex="0" onclick="openGameModal('nondig12')">
+        <div class="thumb"><img src="/mnt/data/website.png" alt="ND 12"></div>
+        <h4>ND 12</h4>
+      </div>
+
+      <div class="card" role="button" tabindex="0" onclick="openGameModal('nondig13')">
+        <div class="thumb"><img src="/mnt/data/website.png" alt="ND 13"></div>
+        <h4>ND 13</h4>
+      </div>
+      <div class="card" role="button" tabindex="0" onclick="openGameModal('nondig14')">
+        <div class="thumb"><img src="/mnt/data/website.png" alt="ND 14"></div>
+        <h4>ND 14</h4>
+      </div>
+      <div class="card" role="button" tabindex="0" onclick="openGameModal('nondig15')">
+        <div class="thumb"><img src="/mnt/data/website.png" alt="ND 15"></div>
+        <h4>ND 15</h4>
+      </div>
+
+      <div class="card" role="button" tabindex="0" onclick="openGameModal('nondig16')">
+        <div class="thumb"><img src="/mnt/data/website.png" alt="ND 16"></div>
+        <h4>ND 16</h4>
+      </div>
+      <div class="card" role="button" tabindex="0" onclick="openGameModal('nondig17')">
+        <div class="thumb"><img src="/mnt/data/website.png" alt="ND 17"></div>
+        <h4>ND 17</h4>
+      </div>
+      <div class="card" role="button" tabindex="0" onclick="openGameModal('nondig18')">
+        <div class="thumb"><img src="/mnt/data/website.png" alt="ND 18"></div>
+        <h4>ND 18</h4>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared Modal -->
+  <div id="gameModal" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true">
+      <span class="close-modal" role="button" aria-label="Close" tabindex="0">&times;</span>
+
+      <h2 id="modalTitle"></h2>
+
+      <a id="modalPlay" class="play-btn" target="_blank" rel="noopener" style="display:none;">Play</a>
+
+      <div class="screenshot-wrapper" style="display:flex; align-items:center;">
+        <button class="nav-btn" id="prevShot" aria-label="Previous screenshot">←</button>
+        <img id="modalScreenshot" class="main-screenshot" src="" alt="Screenshot" />
+        <button class="nav-btn" id="nextShot" aria-label="Next screenshot">→</button>
+      </div>
+
+      <div id="modalScreenshots" class="modal-screenshots" style="display:none;"></div>
+
+      <!-- Description appears below screenshots for ND too -->
+      <p id="modalDescription" class="modal-description" style="display:none;"></p>
+
+      <h3 id="videoTitle" style="display:none; margin-top:20px;">How to Play</h3>
+      <video id="modalVideo" class="modal-video" controls style="display:none;"></video>
+
+      <h3 id="pdfTitle" style="display:none; margin-top:20px;">Rule Book</h3>
+      <embed id="modalPDF" class="modal-pdf" type="application/pdf" src="" style="display:none;" />
+    </div>
+  </div>
+</body>
+</html>

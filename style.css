@@ -1,0 +1,370 @@
+/* =========================
+   style.css — Cleaned & Updated
+   - portfolio-frame: centered white box
+   - cards without per-card white boxes
+   - hover highlight
+   - unified modal & screenshot arrows
+   ========================= */
+
+/* Basic reset + body */
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  background: #f7f7f7;
+  color: #222;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Page wrapper to center content (global fallback) */
+.container {
+  max-width: 1300px;
+  margin: 48px auto;
+  padding: 0 20px;
+}
+
+/* ------------------------------------------------------------------
+   PORTFOLIO FRAME (centered white container that wraps the whole grid)
+   ------------------------------------------------------------------ */
+.portfolio-frame {
+  max-width: 1100px;
+  margin: 48px auto;
+  background: #fff;
+  padding: 36px;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(18, 24, 32, 0.06);
+  border: 1px solid rgba(0,0,0,0.04);
+  box-sizing: border-box;
+}
+
+/* Header inside portfolio frame */
+.portfolio-frame .assignment-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 6px;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+}
+.portfolio-frame .assignment-sub {
+  color: #777;
+  font-size: 12px;
+  margin-bottom: 18px;
+}
+
+/* Grid inside the frame */
+.portfolio-frame .cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+/* Remove per-card white boxes; keep thumbnail visible */
+.portfolio-frame .card {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: transform .18s ease, box-shadow .18s ease;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;   /* LEFT ALIGN content */
+  gap: 8px;
+}
+
+/* Thumbnail styling (retains visual card feel) */
+.portfolio-frame .card .thumb {
+  width: 80px;        /* half size square */
+  height: 80px;
+  background: #f3f3f3;
+  border: 1px solid #e6e6e6;
+  overflow: hidden;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;          /* remove auto-centering */
+}
+
+/* Example placeholder thumbnail (you can remove/comment out).
+   Uploaded image path (used in examples in the HTML): /mnt/data/website.png
+   Example usage in HTML: <img src="/mnt/data/website.png" alt="thumb"> */
+.portfolio-frame .card .thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display:block;
+  transition: transform .25s ease;
+}
+
+/* Title under thumbnail */
+.portfolio-frame .card h4 {
+  margin: 10px 0 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: #333;
+}
+
+/* Hover highlight: subtle lift + thumbnail emphasis */
+.portfolio-frame .card:hover {
+  transform: translateY(-6px);
+  /* light background hint on hover to indicate clickability */
+  background: rgba(0,0,0,0.02);
+  border-radius: 10px;
+}
+.portfolio-frame .card:hover .thumb {
+  border-color: #cfcfcf;
+  box-shadow: 0 6px 18px rgba(22,28,34,0.06);
+}
+.portfolio-frame .card:hover .thumb img {
+  transform: scale(1.03);
+}
+
+/* Small meta text (if you still use paragraphs under title) */
+.portfolio-frame .card p {
+  margin: 6px 0 0;
+  font-size: 12px;
+  color: #666;
+  line-height: 1.4;
+}
+
+/* ------------------------------------------------------------------
+   Existing Index / Frame / Poster styles (kept, slightly cleaned)
+   ------------------------------------------------------------------ */
+.index-wrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  align-items: flex-start;
+  background: #fff;
+  padding: 44px;
+  border-radius: 2px;
+  border: 1px solid rgba(0,0,0,0.03);
+  box-shadow: 0 0 0 8px #f2f2f2 inset;
+}
+.left-block { width: 55%; }
+.right-block { width: 40%; text-align: center; }
+
+.poster-box {
+  width: 260px;
+  height: 340px;
+  margin: auto;
+  background: #eee;
+  border: 1px solid #e1e1e1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.poster-box img { width: 100%; height: 100%; object-fit: cover; display:block; }
+.poster-caption { margin-top: 10px; font-size: 12px; color: #888; }
+
+/* Frame page specifics */
+.page-wrapper {
+  width: 85%;
+  max-width: 1100px;
+  margin: 40px auto;
+  background: #fff;
+  padding: 40px 50px;
+  border-radius: 4px;
+}
+.frame-title { font-size: 22px; font-weight: 300; color: #999; margin-bottom: 20px; }
+.frame-outline { border: 1px solid #ddd; padding: 25px; background: #fff; border-radius: 3px; }
+.frame-row { display: flex; align-items: flex-start; gap: 20px; padding: 20px; border: 1px solid #ddd; margin-bottom: 20px; background: #fafafa; }
+.frame-thumb { width: 70px; height: 70px; background: #e5e5e5; display: inline-block; border-radius: 2px; }
+.frame-text { display:flex; flex-direction:column; gap:5px; }
+.frame-text h3 { font-size:14px; font-weight:600; color:#333; margin:0; text-transform:uppercase; }
+.frame-text p { font-size:13px; color:#777; margin:0; line-height:1.4; }
+
+/* Back button */
+.back-button {
+  display: inline-block;
+  font-size: 14px;
+  color: #777;
+  text-decoration: none;
+  margin: 10px 0 20px 0;
+  transition: 0.2s;
+}
+.back-button:hover { color: #333; }
+
+/* Assignment pages fallback (if you still use .assignment-page) */
+.assignment-page {
+  background: #fff;
+  padding: 28px;
+  border: 1px solid rgba(0,0,0,0.03);
+  box-shadow: 0 0 0 8px #f2f2f2 inset;
+}
+.assignment-title { font-size: 14px; font-weight: 700; margin: 0 0 6px 0; }
+.assignment-sub { font-size: 12px; color: #999; margin-bottom: 18px; text-transform: uppercase; letter-spacing:.8px; }
+
+/* Responsive */
+@media (max-width: 980px) {
+  .index-wrapper { flex-direction: column; }
+  .left-block, .right-block { width: 100%; }
+  .portfolio-frame .cards-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px) {
+  .portfolio-frame .cards-grid { grid-template-columns: 1fr; }
+  .poster-box { width: 200px; height: 260px; }
+}
+
+/* ------------------------------------------------------------------
+   Clean & merged Netflix-style Modal and screenshot arrows
+   ------------------------------------------------------------------ */
+
+/* Overlay (modal background) */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* Modal content box */
+.modal-content {
+  background: white;
+  width: 86%;
+  max-width: 960px;
+  padding: 28px;
+  border-radius: 16px;
+  position: relative;
+  max-height: 92vh;
+  overflow-y: auto;
+}
+
+/* Close button */
+.close-modal {
+  position: absolute;
+  right: 24px;
+  top: 16px;
+  font-size: 30px;
+  cursor: pointer;
+  color: #666;
+}
+.close-modal:hover { color: #000; }
+
+/* Top title */
+#modalTitle {
+  margin: 0 0 14px 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* Play button */
+#modalPlay, .play-btn {
+  display: inline-block;
+  padding: 10px 18px;
+  background: #e50914;
+  color: #fff;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 700;
+  margin: 12px 0 18px 0;
+}
+
+/* Screenshot area — grid fallback (keeps compatibility) */
+.modal-screenshots {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 14px 0;
+}
+.modal-screenshots img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+  background: #eee;
+}
+
+/* Optional single-screenshot viewer with arrows */
+.screenshot-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  margin-top: 14px;
+}
+.nav-btn {
+  background: #222;
+  color: white;
+  padding: 8px 14px;
+  font-size: 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+.nav-btn:hover { background: #000; }
+.main-screenshot {
+  width: 70%;
+  height: 360px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 2px solid #ddd;
+}
+
+/* Description */
+#modalDescription, .modal-description {
+  font-size: 15px;
+  color: #444;
+  margin-top: 14px;
+  margin-bottom: 18px;
+  line-height: 1.5;
+}
+
+/* Video */
+#modalVideo, .modal-video {
+  width: 100%;
+  height: 320px;
+  background: #000;
+  margin-bottom: 18px;
+  border-radius: 8px;
+}
+
+/* Embed PDF (use embed to improve browser display) */
+#modalPDF, .modal-pdf {
+  width: 100%;
+  height: 460px;
+  border: none;
+  background: #f1f1f1;
+  margin-top: 18px;
+  border-radius: 8px;
+}
+
+/* Accessibility focus outlines */
+.card:focus,
+.nav-btn:focus,
+.close-modal:focus,
+#modalPlay:focus {
+  outline: 3px solid rgba(230,0,20,0.12);
+  outline-offset: 3px;
+}
+
+/* Hover highlight for FRAME PAGE options */
+.frame-row {
+  transition: 0.25s ease;
+  cursor: pointer;
+}
+
+.frame-row:hover {
+  background: #f0f0f0;           /* light highlight */
+  border-color: #bbb;            /* subtle border emphasis */
+  transform: translateY(-2px);   /* small lift */
+}
+
+/* Make the entire row behave like a button */
+.frame-outline a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+/*new line fix*/
+#modalDescription {
+  white-space: pre-wrap;
+}
