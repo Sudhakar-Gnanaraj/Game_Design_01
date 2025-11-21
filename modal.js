@@ -5,7 +5,7 @@
 const gameData = {
   /* ------------------ 18 POEM GAMES ------------------ */
   poem1:{ type:"digital", title:"Fireworks Across Time", play:"https://sudhakar-g.itch.io/fireworks-across-time", screenshots:["img/Game Poems/Fireworks Across the Sky/Screenshot1.png","img/Game Poems/Fireworks Across the Sky/Screenshot2.png","img/Game Poems/Fireworks Across the Sky/Screenshot3.png"], description:"“Fireworks Across Time” is an emotional journey through Diwali across the years. As the player grows older, friends drift away and celebrations fade, leaving only memories of laughter and light. This reflective experience captures the bittersweet truth of growing up — that even when the world changes, the glow of Diwali stays in our hearts." },
-  poem2:{ type:"digital", title:"Poem 2", play:"poems/poem2/index.html", screenshots:["/mnt/data/website.png","/mnt/data/website.png"], description:"Poem 2 description." },
+  poem2:{ type:"digital", title:"windws", play:"poems/poem2/index.html", screenshots:["/mnt/data/website.png","/mnt/data/website.png"], description:"Poem 2 description." },
   poem3:{ type:"digital", title:"Poem 3", play:"#", screenshots:["/mnt/data/website.png"], description:"Poem 3 description." },
   poem4:{ type:"digital", title:"Poem 4", play:"#", screenshots:["/mnt/data/website.png"], description:"Poem 4 description." },
   poem5:{ type:"digital", title:"Poem 5", play:"#", screenshots:["/mnt/data/website.png"], description:"Poem 5 description." },
