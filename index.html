@@ -69,9 +69,9 @@
       position: absolute;
       left: 50%;
       top: 50%;
-      width: 46%;
+      width: 65%;
       height: auto;
-      max-height: 44%;
+      max-height: 70%;
       object-fit: cover;
       transform: translate(-50%, -50%);
       border-radius: 8px;
@@ -174,13 +174,13 @@
      * NOTE: Replace the placeholder paths below with your own files.
      **************************************************************************/
     const COLLAGE_IMAGES = [
+      "img/Game Poems/Fireworks Across the Sky/Screenshot1.png", "/mnt/data/website.png", "/mnt/data/website.png",
+      "/mnt/data/website.png", "/mnt/data/website.png", "img/Pong/Casualism/Screenshot1.png",
       "/mnt/data/website.png", "/mnt/data/website.png", "/mnt/data/website.png",
-      "/mnt/data/website.png", "/mnt/data/website.png", "/mnt/data/website.png",
-      "/mnt/data/website.png", "/mnt/data/website.png", "/mnt/data/website.png",
-      "/mnt/data/website.png", "/mnt/data/website.png", "/mnt/data/website.png",
-      "/mnt/data/website.png", "/mnt/data/website.png", "/mnt/data/website.png",
-      "/mnt/data/website.png", "/mnt/data/website.png", "/mnt/data/website.png",
-      "/mnt/data/website.png", "/mnt/data/website.png"
+      "/mnt/data/website.png", "img/Game Poems/Fireworks Across the Sky/Screenshot2.png", "/mnt/data/website.png",
+      "img/Pong/Casualism/Screenshot2.png", "/mnt/data/website.png", "/mnt/data/website.png",
+      "/mnt/data/website.png", "/mnt/data/website.png", "img/Pong/Casualism/Screenshot3.png",
+      "img/Game Poems/Fireworks Across the Sky/Screenshot3.png", "/mnt/data/website.png"
     ];
 
     // How many items to render (use up to COLLAGE_IMAGES.length or fewer)
@@ -213,7 +213,7 @@
       const safeW = posterBox.clientWidth * 0.42;  // horizontal safe radius
       const safeH = posterBox.clientHeight * 0.36; // vertical safe radius
       const tx = randRange(-safeW, safeW) * 0.6;   // reduce spread a bit
-      const ty = randRange(-safeH, safeH) * 0.6;
+      const ty = randRange(-safeH, safeH) * 0.8;
       const rot = randRange(-20, 20);
       const scl = randRange(0.9, 1.05);
       initialTransforms.push({ tx, ty, rot, scl });
@@ -234,8 +234,8 @@
         const dist = randRange(minD, maxD);
         const rot = randRange(-65, 65);
         const scl = randRange(0.95, 1.35);
-        const tx = Math.cos(angle) * dist;
-        const ty = Math.sin(angle) * dist * 0.9;
+        const tx = Math.cos(angle) * dist * 1.6;
+        const ty = Math.sin(angle) * dist * 1.6;
         transforms.push({ tx, ty, rot, scl });
       }
       return transforms;
